@@ -81,7 +81,7 @@
         $("form").submit(function () {
             var name = $('#name').val();
             var pwd = $('#pwd').val();
-            $.post("http://47.100.92.182:6666/addUser",{username:name,password:pwd},function (data) {
+            $.post("http://47.100.92.182:9999/addUser",{username:name,password:pwd},function (data) {
                 /*150.109.66.140:8080*/
                 if (data=="true"){
                     alert('提交成功！');
