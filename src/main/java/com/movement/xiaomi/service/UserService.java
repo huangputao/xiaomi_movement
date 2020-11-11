@@ -14,6 +14,8 @@ public interface UserService {
      */
    String addUser(String username,String pwd);
 
+   String addUserOne(String username,String pwd);
+
    String removeUser(String username);
 
    Map<String,String> getUserList();

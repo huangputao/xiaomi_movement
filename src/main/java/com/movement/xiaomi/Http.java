@@ -34,7 +34,7 @@ public class Http {
  
     private static CloseableHttpClient httpClient = HttpClientBuilder.create().build();
     public static HashMap<String, String> map = new HashMap<>();
-    public static HashMap<String, String> usedMap = new HashMap<>();
+
 
     static {
         // 转换为格式化的json

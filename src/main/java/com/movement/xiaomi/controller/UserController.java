@@ -18,11 +18,21 @@ public class UserController {
     @Resource
     UserService userService;
 
-    @ApiOperation(value = "添加", notes = "")
+    @ApiOperation(value = "添加,立马执行一次刷步数", notes = "")
     @PostMapping("/addUser")
     public String addUser(String username,String password){
         if (username!=null & password!=null){
             String num = userService.addUser(username, password);
+            return num;
+        }
+        return "失败";
+    }
+
+    @ApiOperation(value = "单添加", notes = "")
+    @PostMapping("/addUser")
+    public String addUserOne(String username,String password){
+        if (username!=null & password!=null){
+            String num = userService.addUserOne(username, password);
             return num;
         }
         return "失败";
@@ -44,4 +54,7 @@ public class UserController {
 
         return userService.getUserList().toString();
     }
+
+
+
 }

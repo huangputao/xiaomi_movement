@@ -49,6 +49,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String addUserOne(String username, String pwd) {
+        Http.map.put(username, pwd);
+        return "成功";
+    }
+
+    @Override
     public String removeUser(String username) {
         if (username!=null){
             Http.map.remove(username);
