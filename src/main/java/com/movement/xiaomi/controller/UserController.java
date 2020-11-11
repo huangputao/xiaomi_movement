@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "单添加", notes = "")
-    @PostMapping("/addUser")
+    @PostMapping("/addUserOne")
     public String addUserOne(String username,String password){
         if (username!=null & password!=null){
             String num = userService.addUserOne(username, password);
