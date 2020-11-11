@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.base.Splitter;
+import com.movement.xiaomi.util.RobotUtil;
 import com.qcloud.services.scf.runtime.events.APIGatewayProxyRequestEvent;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -53,6 +54,7 @@ public class Http {
             String user_id = login.get("user_id");
             String appToken = getAppToken(login_token);
             updateStep(appToken, user_id);
+            RobotUtil.get("账号:"+s+" 刷步数成功!","");
         });
     }
 

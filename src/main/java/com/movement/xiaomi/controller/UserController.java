@@ -2,6 +2,7 @@ package com.movement.xiaomi.controller;
 
 import com.movement.xiaomi.Http;
 import com.movement.xiaomi.service.UserService;
+import com.movement.xiaomi.util.RobotUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +57,10 @@ public class UserController {
     }
 
 
-
+    @ApiOperation(value = "查询", notes = "")
+    @GetMapping("/gettest")
+    public String gettest(){
+        RobotUtil.get("刷步成功!","内容");
+        return userService.getUserList().toString();
+    }
 }
