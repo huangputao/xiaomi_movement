@@ -19,7 +19,8 @@ public class ScheduledTasks {
      *   这里设置成每年1月1号00时 执行
      *   0 0 1 1 * ?  每月执行一次
      */
-    @Scheduled(cron = "0 0 16 * * ?")
+    //@Scheduled(cron = "0 0 16 * * ?")
+    @Scheduled(cron = "${schedules.run}")
     public void removeLog(){
         System.out.println("开始执行!");
         http.mainHandler(null,null);

@@ -70,7 +70,7 @@
 </head>
 <body>
 <div id="login">
-    <h1>Login</h1>
+    <h1>Information registration</h1>
     <form method="post" id="sub">
         <input type="text" required="required" placeholder="小米账号" name="u" id="name"></input>
         <input type="password" required="required" placeholder="密码" name="p" id="pwd"></input>
@@ -81,14 +81,20 @@
         $("form").submit(function () {
             var name = $('#name').val();
             var pwd = $('#pwd').val();
-            $.post("http://47.100.92.182:9999/addUser",{username:name,password:pwd},function (data) {
-                /*150.109.66.140:8080*/
-                if (data=="true"){
+            $.post("http://localhost:9999/addUser",{username:name,password:pwd},function (data) {
+
+                if (data=="成功"){
                     alert('提交成功！');
-                }else if (data=="false"){
+                    window.location.reload();
+                }else if (data=="失败"){
                     alert('失败！');
-                }else{
+                    window.location.reload();
+                }else if (data=="已存在"){
                     alert('已存在，请勿重复提交！');
+                    window.location.reload();
+                }else{
+                    alert('密码错误！');
+                    window.location.reload();
                 }
             });
         });

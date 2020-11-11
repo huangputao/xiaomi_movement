@@ -23,14 +23,9 @@ public class UserController {
     public String addUser(String username,String password){
         if (username!=null & password!=null){
             String num = userService.addUser(username, password);
-            if (num.equals("已存在")){
-                return "falses";
-            }else if (num.equals("失败")){
-                return "false";
-            }
+            return num;
         }
-
-        return "true";
+        return "失败";
     }
 
 

@@ -29,14 +29,19 @@ public class UserServiceImpl implements UserService {
 
             Http.map.put(username, pwd);
             String success = http.addHandler(username, pwd);
-            JSONObject jsonObject = JSONObject.parseObject(success);
-            int code = jsonObject.getInteger("code");
-            String message = jsonObject.getString("message");
-            if (code == 1 & message.equals("success")) {
+            if (!success.equals("密码错误")){
+                JSONObject jsonObject = JSONObject.parseObject(success);
+                int code = jsonObject.getInteger("code");
+                String message = jsonObject.getString("message");
+                if (code == 1 & message.equals("success")) {
+                    return "成功";
+                } else {
+                    return "失败";
+                }
+            }else{
                 return success;
-            } else {
-                return "失败:" + success;
             }
+
 
         }
 

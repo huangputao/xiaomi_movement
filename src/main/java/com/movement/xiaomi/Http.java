@@ -34,15 +34,16 @@ public class Http {
  
     private static CloseableHttpClient httpClient = HttpClientBuilder.create().build();
     public static HashMap<String, String> map = new HashMap<>();
-    //更改为自己的账号密码
-    //    map.put("17386035673", "520520hpt");
+    public static HashMap<String, String> usedMap = new HashMap<>();
+
     static {
         // 转换为格式化的json
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         // 如果json中有新增的字段并且是实体类类中不存在的，不报错
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
- 
+
+
     //APIGatewayProxyRequestEvent apiGatewayProxyRequestEvent,Context context
     public void mainHandler(APIGatewayProxyRequestEvent apiGatewayProxyRequestEvent, Context context) {
         map.forEach((s, s2) -> {
@@ -61,11 +62,20 @@ public class Http {
      * @param pwd
      */
     public String addHandler(String name,String pwd) {
-            String accessCode = getAccessCode(name, pwd);
-            Map<String, String> login = login(accessCode);
-            String login_token = login.get("login_token");
-            String user_id = login.get("user_id");
-            String appToken = getAppToken(login_token);
+        String user_id = "";
+        String appToken = "";
+            try{
+                String accessCode = getAccessCode(name, pwd);
+                if (accessCode==null){
+                    return "密码错误";
+                }
+                Map<String, String> login = login(accessCode);
+                String login_token = login.get("login_token");
+                user_id = login.get("user_id");
+                appToken = getAppToken(login_token);
+            }catch (Exception e){
+                e.getStackTrace();
+            }
             return updateStep(appToken, user_id);
     }
 

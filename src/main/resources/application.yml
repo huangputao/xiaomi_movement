@@ -5,3 +5,7 @@ spring:
   thymeleaf:
     cache: false
     prefix: classpath:/templates/
+
+#cron表达式
+schedules:
+  run: 0 0 16 * * ?
