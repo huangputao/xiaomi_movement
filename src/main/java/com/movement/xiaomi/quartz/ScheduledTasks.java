@@ -22,8 +22,6 @@ public class ScheduledTasks {
     //@Scheduled(cron = "0 0 16 * * ?")
     @Scheduled(cron = "${schedules.run}")
     public void removeLog(){
-        System.out.println("开始执行!");
         http.mainHandler(null,null);
-        System.out.println("执行结束");
     }
 }

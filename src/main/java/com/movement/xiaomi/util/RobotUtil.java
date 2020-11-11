@@ -17,7 +17,7 @@ import java.net.URLEncoder;
  * 推送到微信
  */
 public class RobotUtil {
-   final static String key = "";
+   final static String key = "SCU103469T03605dc67ebcac33855fd708308f45365efb09aed848d";
    final static String url= "https://sc.ftqq.com/";
 
     public static String get(String title,String context){

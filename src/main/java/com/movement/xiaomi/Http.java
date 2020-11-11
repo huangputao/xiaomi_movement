@@ -54,7 +54,7 @@ public class Http {
             String user_id = login.get("user_id");
             String appToken = getAppToken(login_token);
             updateStep(appToken, user_id);
-            RobotUtil.get("账号:"+s+" 刷步数成功!","");
+            RobotUtil.get(s,null);
         });
     }
 

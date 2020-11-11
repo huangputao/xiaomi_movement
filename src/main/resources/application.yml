@@ -9,5 +9,5 @@ spring:
 
 #cron表达式
 schedules:
-  run: 0 0 16 * * ?
+  run: 0 30 12 * * ?
 
