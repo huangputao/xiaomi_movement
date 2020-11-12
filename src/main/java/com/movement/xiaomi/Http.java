@@ -69,6 +69,9 @@ public class Http {
      */
     public String addHandler(String name,String pwd) {
                 String accessCode = getAccessCode(name, pwd);
+                if (accessCode==null){
+                    return "{code:0}";
+                }
                 Map<String, String> login = login(accessCode);
                 String login_token = login.get("login_token");
                 String user_id = login.get("user_id");

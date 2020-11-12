@@ -2,10 +2,8 @@ package com.movement.xiaomi.controller;
 
 import com.movement.xiaomi.entity.User;
 import com.movement.xiaomi.service.UserService;
-import com.movement.xiaomi.util.RobotUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.http.client.utils.URIBuilder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -27,11 +25,12 @@ public class UserController {
     }
 
 
-
-    @RequestMapping(value="/addUserAction", method=RequestMethod.GET)
+    //public SbException addUserAction(@RequestParam("username") String username,@RequestParam("password") String password){
     @ApiOperation(value = "添加,立马执行一次刷步数", notes = "")
-    public Boolean addUserAction(@RequestParam("username") String username,@RequestParam("password") String password){
-        return userService.addUserAction(username, password);
+    @PostMapping("/addUserAction")
+    @ResponseBody
+    public Boolean addUserAction(@RequestBody User user){
+        return  userService.addUserAction(user.getUsername(), user.getPassword());
     }
 
     @ApiOperation(value = "删除", notes = "")
