@@ -27,11 +27,11 @@ public class UserController {
     }
 
 
+
+    @RequestMapping(value="/addUserAction", method=RequestMethod.GET)
     @ApiOperation(value = "添加,立马执行一次刷步数", notes = "")
-    @RequestMapping(value="/addUserAction", method=RequestMethod.POST)
-    @ResponseBody
-    public Boolean addUserAction(@RequestBody User user){
-        return userService.addUserAction(user.getUsername(), user.getPassword());
+    public Boolean addUserAction(@RequestParam("username") String username,@RequestParam("password") String password){
+        return userService.addUserAction(username, password);
     }
 
     @ApiOperation(value = "删除", notes = "")
