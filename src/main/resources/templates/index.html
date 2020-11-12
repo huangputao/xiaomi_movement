@@ -76,12 +76,13 @@
         <input type="text" required="required" placeholder="小米账号" name="username" id="name"></input>
 
         <input type="password" required="required" placeholder="密码" name="password" id="pwd"></input>
-        <button class="but" id="ac" type="submit" disabled="disabled">提交</button>
+        <button class="but" id="ac" type="submit" >提交</button>
+        <!--disabled="disabled"-->
     </form>
 </div>
     <script type="application/javascript">
         /*失去焦点事件*/
-        $("#name").blur(function () {
+       /* $("#name").blur(function () {
             var name = $('#name').val();
             $.post("http://localhost:9999/getUserByUserName",{username:name},function (data) {
                 if (!data){
@@ -91,10 +92,10 @@
                     $("#ac").attr("disabled",true);
                 }
             });
-        })
+        })*/
 
 
-        $("form").submit(function () {
+        /*$("form").submit(function () {
             var name = $('#name').val();
             var pwd = $('#pwd').val();
             $.post("http://localhost:9999/addUserAction",{username:name,password:pwd},function (data) {
@@ -106,30 +107,36 @@
                     window.location.reload();
                 }
             });
-        });
-
-
-       /* $("form").submit(function () {
-            var name = $('#name').val();
-            var pwd = $('#pwd').val();
-            $.post("http://47.100.92.182:9999/addUser",{username:name,password:pwd},function (data) {
-
-                if (data=="成功"){
-                    alert('提交成功！');
-                    window.location.reload();
-                }else if (data=="失败"){
-                    alert('失败！');
-                    window.location.reload();
-                }else if (data=="已存在"){
-                    alert('已存在，请勿重复提交！');
-                    window.location.reload();
-                }else{
-                    alert('密码错误！');
-                    window.location.reload();
-                }
-            });
         });*/
 
+        $("form").submit(function () {
+            var name = $('#name').val();
+            var pwd = $('#pwd').val();
+            $.ajax({
+                url: "http://localhost:9999/addUser",    //请求的url地址
+            //    dataType: "json",   //返回格式为json
+                accept: "*/*",
+                contentType:'application/json',
+                async: true,//请求是否异步，默认为异步，这也是ajax重要特性
+                data: "{\"username\": \""+name+"\", \"password\": \""+pwd+"\"}",    //参数值
+                type: "POST",   //请求方式
+
+                beforeSend: function () {
+                    //请求前的处理
+                },
+                success: function (data) {
+                    alert('提交成功！');
+                    //请求成功时处理
+                },
+                complete: function () {
+                    //请求完成的处理
+                },
+                error: function () {
+                    alert('提交失败！');
+                    //请求出错处理
+                }
+            });
+        });
     </script>
 </body>
 
