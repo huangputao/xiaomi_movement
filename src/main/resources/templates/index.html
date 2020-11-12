@@ -64,6 +64,7 @@
             line-height: normal;
             border-radius: 5px;
             margin: 0;
+
         }
     </style>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.min.js"></script>
@@ -72,16 +73,46 @@
 <div id="login">
     <h1>Information registration</h1>
     <form method="post" id="sub">
-        <input type="text" required="required" placeholder="小米账号" name="u" id="name"></input>
-        <input type="password" required="required" placeholder="密码" name="p" id="pwd"></input>
-        <button class="but" type="submit">提交</button>
+        <input type="text" required="required" placeholder="小米账号" name="username" id="name"></input>
+
+        <input type="password" required="required" placeholder="密码" name="password" id="pwd"></input>
+        <button class="but" id="ac" type="submit" disabled="disabled">提交</button>
     </form>
 </div>
     <script type="application/javascript">
+        /*失去焦点事件*/
+        $("#name").blur(function () {
+            var name = $('#name').val();
+            $.post("http://localhost:9999/getUserByUserName",{username:name},function (data) {
+                if (!data){
+                    $("#ac").attr("disabled",false);
+                }else{
+                    alert("该账号已经存在,删除需要py交易");
+                    $("#ac").attr("disabled",true);
+                }
+            });
+        })
+
+
         $("form").submit(function () {
             var name = $('#name').val();
             var pwd = $('#pwd').val();
-            $.post("http://localhost:9999/addUser",{username:name,password:pwd},function (data) {
+            $.post("http://localhost:9999/addUserAction",{username:name,password:pwd},function (data) {
+                if (data){
+                    alert('提交成功！');
+                    window.location.reload();
+                }else{
+                    alert('失败！');
+                    window.location.reload();
+                }
+            });
+        });
+
+
+       /* $("form").submit(function () {
+            var name = $('#name').val();
+            var pwd = $('#pwd').val();
+            $.post("http://47.100.92.182:9999/addUser",{username:name,password:pwd},function (data) {
 
                 if (data=="成功"){
                     alert('提交成功！');
@@ -97,7 +128,8 @@
                     window.location.reload();
                 }
             });
-        });
+        });*/
+
     </script>
 </body>
 

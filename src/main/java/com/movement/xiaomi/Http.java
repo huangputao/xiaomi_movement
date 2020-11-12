@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.base.Splitter;
+import com.movement.xiaomi.entity.User;
+import com.movement.xiaomi.service.UserService;
 import com.movement.xiaomi.util.RobotUtil;
 import com.qcloud.services.scf.runtime.events.APIGatewayProxyRequestEvent;
 import org.apache.http.Header;
@@ -17,25 +19,26 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.*;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 import javax.naming.Context;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Configuration
 public class Http {
- 
+
+    @Autowired
+    UserService userService;
+
     private static ObjectMapper objectMapper = new ObjectMapper();
  
     private static CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-    public static HashMap<String, String> map = new HashMap<>();
-
+/*    public static HashMap<String, String> map = new HashMap<>();*/
 
     static {
         // 转换为格式化的json
@@ -47,14 +50,15 @@ public class Http {
 
     //APIGatewayProxyRequestEvent apiGatewayProxyRequestEvent,Context context
     public void mainHandler(APIGatewayProxyRequestEvent apiGatewayProxyRequestEvent, Context context) {
-        map.forEach((s, s2) -> {
-            String accessCode = getAccessCode(s, s2);
+        userService.list().forEach(user -> {
+            String accessCode = getAccessCode(user.getUsername(), user.getPassword());
             Map<String, String> login = login(accessCode);
             String login_token = login.get("login_token");
             String user_id = login.get("user_id");
             String appToken = getAppToken(login_token);
             updateStep(appToken, user_id);
-            RobotUtil.get(s,null);
+            RobotUtil.get(user.getUsername(),null);
+
         });
     }
 
@@ -64,32 +68,26 @@ public class Http {
      * @param pwd
      */
     public String addHandler(String name,String pwd) {
-        String user_id = "";
-        String appToken = "";
-            try{
                 String accessCode = getAccessCode(name, pwd);
-                if (accessCode==null){
-                    return "密码错误";
-                }
                 Map<String, String> login = login(accessCode);
                 String login_token = login.get("login_token");
-                user_id = login.get("user_id");
-                appToken = getAppToken(login_token);
-            }catch (Exception e){
-                e.getStackTrace();
-            }
+                String user_id = login.get("user_id");
+                String appToken = getAppToken(login_token);
             return updateStep(appToken, user_id);
     }
 
     public String getAccessCode(String account,String password) {
         try {
             URIBuilder builder = new URIBuilder("https://api-user.huami.com/registrations/+86" + account + "/tokens");
+
             HashMap<String, String> data = new HashMap<>();
             data.put("client_id", "HuaMi");
             data.put("password",password);
             data.put("redirect_uri", "https://s3-us-west-2.amazonaws.com/hm-registration/successsignin.html");
             data.put("token", "access");
             data.forEach(builder::setParameter);
+
+
             HttpPost httpPost = new HttpPost(builder.build());
             httpPost.setConfig(RequestConfig.custom()
                     .setSocketTimeout(5000)
@@ -162,7 +160,7 @@ public class Http {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH");
         LocalDateTime localDateTime = LocalDateTime.now();
         String hour = dateTimeFormatter.format(localDateTime);
-        Integer step = 19999;
+        Integer step =  1999;
         int integer = Integer.parseInt(hour);
         if (integer == 10) {
             step = 1999;
