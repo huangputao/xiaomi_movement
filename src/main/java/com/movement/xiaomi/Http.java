@@ -52,6 +52,10 @@ public class Http {
     public void mainHandler(APIGatewayProxyRequestEvent apiGatewayProxyRequestEvent, Context context) {
         userService.list().forEach(user -> {
             String accessCode = getAccessCode(user.getUsername(), user.getPassword());
+            if (accessCode==null){
+                System.out.println(user.getUsername()+ ":密码错误!跳过执行");
+                return;
+            }
             Map<String, String> login = login(accessCode);
             String login_token = login.get("login_token");
             String user_id = login.get("user_id");
@@ -170,7 +174,7 @@ public class Http {
         } else if (integer == 11) {
             step = 23456;
         } else if (integer >= 12) {
-            step = new Random().nextInt(40000-30000)+30000;
+            step = new Random().nextInt(30000-25000)+25000;
         } else {
             step = 19999;
         }

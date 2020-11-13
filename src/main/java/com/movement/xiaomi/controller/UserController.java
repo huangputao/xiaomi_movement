@@ -14,6 +14,7 @@ import java.util.List;
  */
 @RestController
 @Api(tags = "user控制类",produces = "application/json")
+@RequestMapping("/xiaomi")
 public class UserController {
     @Resource
     UserService userService;
@@ -42,11 +43,11 @@ public class UserController {
         return false;
     }
 
-    @ApiOperation(value = "查询", notes = "")
+/*    @ApiOperation(value = "查询", notes = "")
     @GetMapping("/getUserList")
     public List<User> getUserList(){
         return userService.getUserList();
-    }
+    }*/
 
 
     @ApiOperation(value = "根据username查询是否存在数据", notes = "")

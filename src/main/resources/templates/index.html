@@ -83,10 +83,11 @@
 
 </div>
     <script type="application/javascript">
+        var host ="http://localhost:9999/xiaomi";
         /*失去焦点事件*/
         $("#name").blur(function () {
             var name = $('#name').val();
-            $.post("http://localhost:9999/getUserByUserName",{username:name},function (data) {
+            $.post(host+"/getUserByUserName",{username:name},function (data) {
                 if (!data){
                     $("#ac").attr("disabled",false);
                 }else{
@@ -96,26 +97,11 @@
             });
         })
 
-
-        /*$("form").submit(function () {
-            var name = $('#name').val();
-            var pwd = $('#pwd').val();
-            $.post("http://localhost:9999/addUserAction",{username:name,password:pwd},function (data) {
-                if (data){
-                    alert('提交成功！');
-                    window.location.reload();
-                }else{
-                    alert('失败！');
-                    window.location.reload();
-                }
-            });
-        });*/
-
         $("form").submit(function () {
             var name = $('#name').val();
             var pwd = $('#pwd').val();
             $.ajax({
-                url: "http://localhost:9999/addUserAction",    //请求的url地址
+                url: host+"/addUserAction",    //请求的url地址
                 dataType: "json",   //返回格式为json
                 accept: "*/*",
                 contentType:'application/json',

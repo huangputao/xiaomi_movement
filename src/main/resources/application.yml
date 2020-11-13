@@ -17,8 +17,8 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/xiaomi_movement?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC&useSSL=false
     username: root
     password: 123456
-
 #cron表达式
 schedules:
-  run: 0 10 16 * * ?
+  run: 0 01 18 * * ?
+
 
