@@ -46,14 +46,16 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     }
 
     @Override
-    public Boolean addUserAction(String username, String pwd) {
+    public Boolean addUserAction(String username, String pwd) throws UnsupportedEncodingException {
         if (username != null & pwd != null) {
             String num = http.addHandler(username, pwd);
             JSONObject object = JSONObject.parseObject(num);
             Integer code =  object.getInteger("code");
             if (code==1){
                 User user = new User();
-                user.setPassword(pwd);
+                //使用base64加密密码存入数据库
+                String base64 = Base64.getEncoder().encodeToString(pwd.getBytes("UTF-8"));
+                user.setPassword(base64);
                 user.setUsername(username);
                 save(user);
                 return true;

@@ -31,7 +31,7 @@ public class UserController {
     @ApiOperation(value = "添加,立马执行一次刷步数", notes = "")
     @PostMapping("/addUserAction")
     @ResponseBody
-    public Boolean addUserAction(@RequestBody User user){
+    public Boolean addUserAction(@RequestBody User user) throws UnsupportedEncodingException {
         return  userService.addUserAction(user.getUsername(), user.getPassword());
     }
 

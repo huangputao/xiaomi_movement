@@ -30,7 +30,7 @@ public interface UserService extends IService<User> {
      * @param pwd
      * @return
      */
-    Boolean addUserAction(String username,String pwd);
+    Boolean addUserAction(String username,String pwd) throws UnsupportedEncodingException;
 
     /**
      * 删除
