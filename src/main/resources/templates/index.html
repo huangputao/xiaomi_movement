@@ -83,6 +83,18 @@
 
 </div>
     <script type="application/javascript">
+        $(function () {
+            alert('使用方法\n' +
+                '1、下载小米运动APP,安卓可在各大应用市场下载。\n' +
+                '\n' +
+                '2、苹果可在App Store或其他平台下载。\n' +
+                '\n' +
+                '3、安装APP并注册(不要使用微信,小米等账号登录)账号后点击-我-第三方接入-绑定至相关应用即可。\n' +
+                '\n' +
+                '4、绑定需要的应用后，在本页面输入刚刚注册的账号密码,点击提交修改。');
+        })
+
+
         var host ="http://localhost:9999/xiaomi";
         /*失去焦点事件*/
         $("#name").blur(function () {
