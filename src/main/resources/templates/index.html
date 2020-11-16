@@ -73,9 +73,9 @@
 <div id="login">
     <h1>Information registration</h1>
     <form id="sub">
-        <input type="text" required="required" placeholder="小米账号" name="username" id="name"></input>
+        <input type="text" required="required" placeholder="小米账号"  id="name"></input>
 
-        <input type="password" required="required" placeholder="密码" name="password" id="pwd"></input>
+        <input type="password" required="required" placeholder="密码"  id="pwd"></input>
         <button class="but" id="ac" type="submit" disabled="disabled">提交</button>
         <!--disabled="disabled"-->
     </form>
@@ -94,11 +94,12 @@
         })
 
 
-        var host ="http://localhost:9999/xiaomi";
+        var host ="http://localhost:9999";
+
         /*失去焦点事件*/
         $("#name").blur(function () {
             var name = $('#name').val();
-            $.post(host+"/getUserByUserName",{username:name},function (data) {
+            $.post(host+"/xiaomi/getUserByUserName",{username:name},function (data) {
                 if (!data){
                     $("#ac").attr("disabled",false);
                 }else{
@@ -109,15 +110,19 @@
         })
 
         $("form").submit(function () {
-            var name = $('#name').val();
-            var pwd = $('#pwd').val();
+            var formData = {
+                username : $('#name').val(),
+                password : $('#pwd').val()
+            };
+
             $.ajax({
-                url: host+"/addUserAction",    //请求的url地址
+                url: host+"/xiaomi/addUserAction",    //请求的url地址
                 dataType: "json",   //返回格式为json
                 accept: "*/*",
                 contentType:'application/json',
                 async: false,
-                data: "{\"username\": \""+name+"\", \"password\": \""+pwd+"\"}",    //参数值
+            //    data: "{\"username\": \""+name+"\", \"password\": \""+pwd+"\"}",    //参数值
+                data: JSON.stringify(formData),
                 type: "post",
                 success : function(result) {
                     if (!result){
