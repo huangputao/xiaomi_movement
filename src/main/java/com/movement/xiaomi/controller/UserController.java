@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ public class UserController {
 
     @ApiOperation(value = "单添加(添加完等任务调度执行)", notes = "")
     @PostMapping("/addUser")
-    public Boolean addUser(@RequestBody User user){
+    public Boolean addUser(@RequestBody User user) throws UnsupportedEncodingException {
          return userService.addUser(user.getUsername(), user.getPassword());
     }
 

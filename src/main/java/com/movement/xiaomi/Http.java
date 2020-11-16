@@ -24,6 +24,7 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.naming.Context;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -51,7 +52,10 @@ public class Http {
     //APIGatewayProxyRequestEvent apiGatewayProxyRequestEvent,Context context
     public void mainHandler(APIGatewayProxyRequestEvent apiGatewayProxyRequestEvent, Context context) {
         userService.list().forEach(user -> {
-            String accessCode = getAccessCode(user.getUsername(), user.getPassword());
+            //解码解密base64
+            String pwd = new String(Base64.getDecoder().decode(user.getPassword()), StandardCharsets.UTF_8);
+            String accessCode = getAccessCode(user.getUsername(), pwd);
+
             if (accessCode==null){
                 System.out.println(user.getUsername()+ ":密码错误!跳过执行");
                 return;

@@ -3,6 +3,7 @@ package com.movement.xiaomi.service;
 import com.movement.xiaomi.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,7 @@ public interface UserService extends IService<User> {
      * @param pwd
      * @return
      */
-    Boolean addUser(String username,String pwd);
+    Boolean addUser(String username,String pwd) throws UnsupportedEncodingException;
 
     /**
      * 添加用户信息后立马调用刷步

@@ -10,7 +10,10 @@ import com.movement.xiaomi.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.security.provider.MD5;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
@@ -28,10 +31,12 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     Http http;
 
     @Override
-    public Boolean addUser(String username, String pwd) {
+    public Boolean addUser(String username, String pwd) throws UnsupportedEncodingException {
         if (username != null & pwd != null) {
             User user = new User();
-            user.setPassword(pwd);
+            //使用base64加密密码存入数据库
+            String base64 = Base64.getEncoder().encodeToString(pwd.getBytes("UTF-8"));
+            user.setPassword(base64);
             user.setUsername(username);
             if (save(user)){
                 return true;
